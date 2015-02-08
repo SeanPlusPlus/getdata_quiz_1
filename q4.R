@@ -18,8 +18,12 @@ main <- function() {
   doc <- getRestaurants()
   rootNode <- xmlRoot(doc)
   rootNode <- rootNode[[1]]
+
+  # get zipcodes
   xpathSApply(rootNode, "//zipcode", xmlValue)
   zipCodes <- xpathSApply(rootNode, "//zipcode", xmlValue)
+
+  # cast to data frame and get frequency
   zipCodes <- table(zipCodes)
   print(zipCodes[names(zipCodes) == "21231"])
   # 127

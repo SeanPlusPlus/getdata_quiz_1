@@ -15,11 +15,19 @@ insertRow <- function(existingdat, newrow, r) {
 ################################################################################
 getGasData <- function() {
 ################################################################################
+
+  # install libs
   install.packages("xlsx")
   library(xlsx)
-  #if(!file.exists("data")){dir.create("data")}
-  #fileUrl <- "https://d396qusza40orc.cloudatront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
-  #download.file(fileUrl, destfile = "./data/nat_gas.xlsx", method = "curl")
+
+  # add data dir
+  if(!file.exists("data")) {
+    dir.create("data")
+  }
+
+  # fetch and return
+  fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
+  download.file(fileUrl, destfile = "./data/nat_gas.xlsx", method = "curl")
   gasData <- read.xlsx("./data/nat_gas.xlsx", sheetIndex = 1, header = FALSE)
   return(gasData)
 }
@@ -47,4 +55,5 @@ main <- function() {
   dat$Ext <- as.numeric(dat$Ext)
 
   print(sum(dat$Zip*dat$Ext,na.rm=T))
+  # 36534720
 }

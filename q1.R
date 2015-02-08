@@ -11,20 +11,23 @@
 getPropertyValues <- function() {
 ################################################################################
 
-  data <- read.csv("getdata-data-ss06hid.csv")
-  property_values <- data[,"VAL"]
-  return(property_vals[!is.na(property_vals)])
+  # add data dir
+  if(!file.exists("data")) {
+    dir.create("data")
+  }
 
+  # fetch and return
+  fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+  download.file(fileUrl, destfile = "./data/community.csv", method = "curl")
+  data <- read.csv("./data/community.csv")
+  property_values <- data[,"VAL"]
+  return(property_values[!is.na(property_values)])
 }
 
 ################################################################################
 main <- function() {
 ################################################################################
-
   vals <- getPropertyValues()
   print(sum(vals > 23))
-
+  # 53
 }
-
-main()
-# 53
