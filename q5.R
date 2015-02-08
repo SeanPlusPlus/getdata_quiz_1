@@ -13,20 +13,24 @@
 getHousingData <- function() {
 ################################################################################
 
+  # lod libs
+  library(data.table)
+
   # add data dir
   if(!file.exists("data")) {
     dir.create("data")
   }
 
   # fetch and return
-  fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
-  download.file(fileUrl, destfile = "./data/community2006.csv", method = "curl")
-  data <- read.csv("./data/community2006.csv")
+  #fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
+  #download.file(fileUrl, destfile = "./data/community2006.csv", method = "curl")
+  data <- fread("./data/community2006.csv")
   return(data)
 }
 
 ################################################################################
 main <- function() {
 ################################################################################
-  data <- getHousingData()
+  DT <- getHousingData()
+  DT[,mean(pwgtp15),by=SEX]
 }
